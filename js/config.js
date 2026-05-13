@@ -12,6 +12,8 @@ const KEYS = {
   PRODUCTS:    'products',
   CATEGORIES:  'categories',
   BRANCHES:    'branches',
+  USERS:       'users',
+  ORDERS:      'orders',
 };
 
 // ─── Configuración por defecto ────────────────────────────────────────────────
@@ -30,13 +32,13 @@ const DEFAULT_CONFIG = {
   // Hero
   heroTitle:        'Donde cada sabor cuenta una historia inolvidable',
   heroSubtitle:     'Descubrí una propuesta gastronómica única, elaborada con los ingredientes más exclusivos del mercado.',
-  heroBgImage:      'images/hero-bg.png',           // base64 o URL de la imagen de fondo del hero
+  heroBgImage:      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&auto=format&fit=crop&q=80',           // base64 o URL de la imagen de fondo del hero
   heroBtn1Text:     'Ver Nuestra Carta',
   heroBtn1Link:     'productos.html',
   heroBtn2Text:     'Hacer Pedido Online',
-  heroBtn2Link:     'https://wa.me/595000000000',
-  heroFilterColor:  '#b40000',               // Rojo transparente por defecto
-  heroFilterOpacity: 0.35,                   // Opacidad por defecto
+  heroBtn2Link:     'https://wa.me/595982300307',
+  heroFilterColor:  '#000000',               // Negro para mejor contraste
+  heroFilterOpacity: 0.5,                   // Opacidad ajustada
 
   // Contacto
   contactTitle:     '¿Tenés alguna consulta?',
@@ -96,7 +98,8 @@ const DEFAULT_BRANCHES = [
     address: 'Av. Principal 123, Centro',
     phone: '+595 21 000-000',
     hours: 'Lunes a domingo: 11:00 a 23:00hs',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80',
+    mapsUrl: 'https://goo.gl/maps/example1',
     active: true,
   },
   {
@@ -105,7 +108,8 @@ const DEFAULT_BRANCHES = [
     address: 'Shopping Central, Local 45',
     phone: '+595 21 000-001',
     hours: 'Lunes a domingo: 10:00 a 22:00hs',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&auto=format&fit=crop&q=80',
+    mapsUrl: 'https://goo.gl/maps/example2',
     active: true,
   },
   {
@@ -114,7 +118,8 @@ const DEFAULT_BRANCHES = [
     address: 'Av. Norte 456, Barrio Norte',
     phone: '+595 21 000-002',
     hours: 'Lunes a sábado: 12:00 a 22:00hs',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80',
+    mapsUrl: 'https://goo.gl/maps/example3',
     active: true,
   },
 ];
@@ -131,81 +136,81 @@ const DEFAULT_CATEGORIES = [
 const DEFAULT_PRODUCTS = [
   {
     id: 'prod-1',
-    name: 'Plato Especial de la Casa',
-    description: 'Nuestra especialidad preparada con ingredientes frescos y seleccionados del día.',
+    name: 'Lomo a la Pimienta',
+    description: 'Tierno medallón de lomo con salsa de pimienta negra y guarnición de papas rústicas.',
     price: 85000,
     category: 'cat-1',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80',
     featured: true,
     available: true,
   },
   {
     id: 'prod-2',
-    name: 'Combinado Premium',
-    description: 'Una combinación perfecta de sabores que deleitará tu paladar.',
-    price: 95000,
+    name: 'Pizza Gourmet',
+    description: 'Masa artesanal, mozzarella de búfala, tomates cherry y albahaca fresca.',
+    price: 65000,
     category: 'cat-1',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop&q=80',
     featured: true,
     available: true,
   },
   {
     id: 'prod-3',
-    name: 'Entrada Clásica',
-    description: 'La entrada perfecta para comenzar tu experiencia gastronómica.',
+    name: 'Bruschettas Mixtas',
+    description: 'Pan de campo tostado con variedad de toppings mediterráneos.',
     price: 35000,
     category: 'cat-2',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1541529086526-db283c563270?w=800&auto=format&fit=crop&q=80',
     featured: false,
     available: true,
   },
   {
     id: 'prod-4',
-    name: 'Postre del Chef',
-    description: 'Postre artesanal elaborado diariamente con ingredientes premium.',
-    price: 25000,
+    name: 'Volcán de Chocolate',
+    description: 'Bizcocho tibio con corazón fundido de chocolate amargo y helado de vainilla.',
+    price: 32000,
     category: 'cat-3',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&auto=format&fit=crop&q=80',
     featured: false,
     available: true,
   },
   {
     id: 'prod-5',
-    name: 'Plato Vegetariano',
-    description: 'Opción saludable y deliciosa para los amantes de la cocina vegetariana.',
-    price: 70000,
+    name: 'Bowl Veggie Nutritivo',
+    description: 'Mix de quinoa, palta, garbanzos crocantes y vegetales de estación.',
+    price: 45000,
     category: 'cat-1',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop&q=80',
     featured: false,
     available: true,
   },
   {
     id: 'prod-6',
-    name: 'Bebida Especial',
-    description: 'Refrescante bebida preparada con frutas frescas de temporada.',
+    name: 'Limonada con Menta',
+    description: 'Refrescante limonada casera con menta fresca y jengibre.',
     price: 18000,
     category: 'cat-4',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1513558161293-cdaf76589fd8?w=800&auto=format&fit=crop&q=80',
     featured: false,
     available: true,
   },
   {
     id: 'prod-7',
-    name: 'Tabla de Entradas',
-    description: 'Selección variada de entradas para compartir en buena compañía.',
-    price: 55000,
+    name: 'Tabla de Quesos',
+    description: 'Variedad de quesos nacionales e importados acompañados de frutos secos.',
+    price: 75000,
     category: 'cat-2',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1544124499-58912cbddaad?w=800&auto=format&fit=crop&q=80',
     featured: true,
     available: true,
   },
   {
     id: 'prod-8',
-    name: 'Postre Clásico',
-    description: 'El postre de siempre, con la calidad que nos caracteriza.',
-    price: 20000,
+    name: 'Cheesecake de Frutos Rojos',
+    description: 'Clásico cheesecake neoyorquino con coulis de frutos del bosque.',
+    price: 28000,
     category: 'cat-3',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&auto=format&fit=crop&q=80',
     featured: false,
     available: true,
   },
@@ -221,10 +226,52 @@ class AppConfig {
     this.products   = this._load(KEYS.PRODUCTS,   DEFAULT_PRODUCTS);
     this.categories = this._load(KEYS.CATEGORIES, DEFAULT_CATEGORIES);
     this.branches   = this._load(KEYS.BRANCHES,   DEFAULT_BRANCHES);
+    
+    // Forzar actualización de imágenes si están vacías (para que el usuario vea los cambios)
+    this._fillMissingData();
+    
     this._applyTheme();
 
     if (db) {
       this._syncFromFirebase();
+    }
+  }
+
+  // ─── Llenar datos faltantes (imágenes vacías) de los defaults ──────────────
+  _fillMissingData() {
+    let productsUpdated = false;
+    this.products.forEach(p => {
+      const def = DEFAULT_PRODUCTS.find(dp => dp.id === p.id);
+      if (def && (!p.image || p.image === '')) {
+        p.image = def.image;
+        productsUpdated = true;
+      }
+      // Actualizar nombres y descripciones si son los por defecto antiguos
+      if (def && (p.name === 'Plato Especial de la Casa' || p.name === 'Combinado Premium' || p.name === 'Bebida Especial')) {
+        p.name = def.name;
+        p.description = def.description;
+        productsUpdated = true;
+      }
+    });
+
+    let branchesUpdated = false;
+    this.branches.forEach(b => {
+      const def = DEFAULT_BRANCHES.find(db => db.id === b.id);
+      if (def && (!b.image || b.image === '')) {
+        b.image = def.image;
+        branchesUpdated = true;
+      }
+    });
+
+    if (productsUpdated) this._save(KEYS.PRODUCTS, this.products);
+    if (branchesUpdated) this._save(KEYS.BRANCHES, this.branches);
+    
+    // También para el hero si es el default antiguo
+    if (this.config.heroBgImage === 'images/hero-bg.png') {
+      this.config.heroBgImage = DEFAULT_CONFIG.heroBgImage;
+      this.config.heroFilterColor = DEFAULT_CONFIG.heroFilterColor;
+      this.config.heroFilterOpacity = DEFAULT_CONFIG.heroFilterOpacity;
+      this._save(KEYS.CONFIG, this.config);
     }
   }
 
@@ -283,6 +330,9 @@ class AppConfig {
           if (key === KEYS.PRODUCTS)   this.products = data;
           if (key === KEYS.CATEGORIES) this.categories = data;
           if (key === KEYS.BRANCHES)   this.branches = data;
+
+          // Asegurar que las imágenes no se pierdan al sincronizar con un Firebase vacío de fotos
+          this._fillMissingData();
 
           window.dispatchEvent(new CustomEvent('app-config-updated', { detail: { key } }));
         } else {
@@ -467,6 +517,45 @@ class AppConfig {
       currency: 'PYG',
       maximumFractionDigits: 0,
     }).format(price);
+  }
+
+  // ─── Gestión de Perfil de Usuario ──────────────────────────────────────────
+  async saveUserProfile(userId, data) {
+    if (!db) return;
+    try {
+      await db.ref(`${KEYS.USERS}/${userId}`).set(data);
+      console.log(`[AppConfig] Perfil guardado para ${userId}`);
+    } catch (e) {
+      console.error(`[AppConfig] Error al guardar perfil:`, e);
+      throw e;
+    }
+  }
+
+  async getUserProfile(userId) {
+    if (!db) return null;
+    try {
+      const snapshot = await db.ref(`${KEYS.USERS}/${userId}`).once('value');
+      return snapshot.val();
+    } catch (e) {
+      console.error(`[AppConfig] Error al obtener perfil:`, e);
+      return null;
+    }
+  }
+
+  async getUserOrders(userId) {
+    if (!db) return [];
+    try {
+      // Los pedidos se guardan en /orders/ y cada pedido tiene un campo 'userId'
+      // O se guardan en /orders/userId/idPedido. Dependerá de cómo estructuremos el carrito.
+      // Por ahora, asumamos /orders/ filtrado por userId (aunque Firebase no es eficiente sin índices, para un MVP sirve)
+      const snapshot = await db.ref(KEYS.ORDERS).orderByChild('userId').equalTo(userId).once('value');
+      const data = snapshot.val();
+      if (!data) return [];
+      return Object.keys(data).map(key => ({ id: key, ...data[key] }));
+    } catch (e) {
+      console.error(`[AppConfig] Error al obtener pedidos:`, e);
+      return [];
+    }
   }
 
   // ─── Obtener categoría por ID ─────────────────────────────────────────────

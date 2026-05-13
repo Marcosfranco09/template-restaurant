@@ -81,6 +81,13 @@ function initNavbar() {
       });
     });
   }
+
+  // Floating WhatsApp
+  const waNumber = cfg.whatsappNumber;
+  const waFloat = document.getElementById('whatsapp-float');
+  if (waFloat && waNumber) {
+    waFloat.href = `https://wa.me/${waNumber}`;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -181,8 +188,23 @@ function createBranchCard(branch) {
           </svg>
           <span>${escapeHTML(branch.hours)}</span>
         </div>` : ''}
+        
+        <a href="${formatMapsUrl(branch.mapsUrl || branch.address)}" target="_blank" class="btn-maps">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Cómo llegar
+        </a>
       </div>
     </div>`;
+}
+
+function formatMapsUrl(destination) {
+  if (!destination) return 'https://www.google.com/maps';
+  // Si ya es un enlace completo de direcciones, lo dejamos así
+  if (destination.includes('google.com/maps/dir')) return destination;
+  // De lo contrario, forzamos el modo de navegación/direcciones
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -235,7 +257,7 @@ function createProductCard(product) {
     : '';
 
   return `
-    <div class="product-card reveal">
+    <div class="product-card reveal" onclick="window.openProductModal('${product.id}')">
       <div class="product-card__img">
         ${imgHTML}
         ${featuredBadge}
@@ -246,10 +268,71 @@ function createProductCard(product) {
         ${product.description ? `<p class="product-card__desc">${escapeHTML(product.description)}</p>` : ''}
         <div class="product-card__footer">
           <span class="product-card__price">${priceStr}</span>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); window.quickAdd('${product.id}', event)" title="Añadir al carrito">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>`;
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LOGICA DE MODAL Y CARRITO
+// ═══════════════════════════════════════════════════════════════════════════════
+window.openProductModal = function(productId) {
+  const product = window.App.getProductById(productId);
+  if (!product) return;
+
+  const modal = document.getElementById('product-modal');
+  if (!modal) return;
+
+  const img = document.getElementById('modal-product-img');
+  const name = document.getElementById('modal-product-name');
+  const cat = document.getElementById('modal-product-category');
+  const desc = document.getElementById('modal-product-desc');
+  const price = document.getElementById('modal-product-price');
+  const qtyInput = document.getElementById('modal-product-qty');
+  const addBtn = document.getElementById('modal-add-btn');
+
+  if (img) img.src = product.image || 'img/logo.png';
+  if (name) name.textContent = product.name;
+  if (cat) cat.textContent = window.App.getCategoryName(product.category);
+  if (desc) desc.textContent = product.description || 'Sin descripción disponible.';
+  if (price) price.textContent = window.App.formatPrice(product.price);
+  if (qtyInput) qtyInput.value = 1;
+
+  if (addBtn) {
+    addBtn.onclick = (e) => window.Cart.add(product, parseInt(document.getElementById('modal-product-qty').value), e);
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeProductModal = function() {
+  const modal = document.getElementById('product-modal');
+  if (modal) modal.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.changeQty = function(delta) {
+  const input = document.getElementById('modal-product-qty');
+  if (!input) return;
+  let val = parseInt(input.value) + delta;
+  if (val < 1) val = 1;
+  input.value = val;
+};
+
+window.quickAdd = function(productId, e) {
+  const product = window.App.getProductById(productId);
+  if (product) window.Cart.add(product, 1, e);
+};
+
+window.addToCart = function(product, qty) {
+  window.Cart.add(product, qty);
+};
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONTACTO

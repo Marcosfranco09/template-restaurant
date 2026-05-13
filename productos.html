@@ -36,14 +36,21 @@
       <input type="search" id="search-input" class="navbar__search-input" placeholder="Buscar productos..." autocomplete="off" aria-label="Buscar productos">
     </div>
 
-    <!-- CTA Desktop -->
-    <div class="navbar__cta">
-      <a id="search-whatsapp-btn" href="#" target="_blank" class="btn btn-whatsapp" aria-label="Hacer pedido">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        Hacé tu pedido
-      </a>
+    </div>
+    
+    <div class="navbar__actions">
+      <div class="nav-auth-container" id="nav-auth-container">
+        <a href="login.html" id="nav-auth" class="navbar__link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span id="nav-auth-text">Iniciar Sesión</span>
+        </a>
+        <div class="nav-dropdown" id="nav-auth-dropdown">
+          <!-- Opciones dinámicas -->
+        </div>
+      </div>
     </div>
 
     <!-- Hamburger mobile -->
@@ -52,26 +59,30 @@
       <span></span>
       <span></span>
     </button>
-
-    <!-- Menú móvil simplificado para productos -->
-    <nav class="navbar__mobile" id="mobile-menu" aria-label="Menú móvil">
-      <div style="padding: 0.5rem 0; color: var(--site-text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
-        Buscar en la Carta
-      </div>
-      
-      <!-- Buscador integrado en el menú (Mobile) -->
-      <div class="navbar__search-wrap navbar__search-wrap--mobile" style="display: flex; margin-bottom: 1.5rem;">
-        <svg class="navbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="left: 0.85rem; color: rgba(255,255,255,0.4);">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input type="search" id="search-input-mobile" class="navbar__search-input" placeholder="¿Qué estás buscando?" autocomplete="off" style="padding-left: 2.5rem; width: 100%;">
-      </div>
-
-      <a href="#" id="nav-cta-mobile" class="btn btn-whatsapp" style="justify-content: center;">
-        Hacé tu pedido
-      </a>
-    </nav>
   </header>
+
+  <!-- Menú móvil simplificado para productos -->
+  <nav class="navbar__mobile" id="mobile-menu" aria-label="Menú móvil">
+    <div style="padding: 0.5rem 0; color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; opacity: 0.8;">
+      Buscar en la Carta
+    </div>
+    
+    <!-- Buscador integrado en el menú (Mobile) -->
+    <div class="navbar__search-wrap navbar__search-wrap--mobile" style="display: flex; margin-bottom: 1.5rem;">
+      <svg class="navbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="left: 0.85rem; color: rgba(255,255,255,0.4);">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="search" id="search-input-mobile" class="navbar__search-input" placeholder="¿Qué estás buscando?" autocomplete="off" style="padding-left: 2.5rem; width: 100%;">
+    </div>
+
+    <div class="nav-auth-container" id="nav-auth-container-mobile" style="margin-top: 1rem;">
+      <a href="login.html" id="nav-auth-mobile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="nav-auth-text-mobile">Iniciar Sesión</span>
+      </a>
+      <div class="nav-dropdown" id="nav-auth-dropdown-mobile"></div>
+    </div>
+  </nav>
 
 
 
@@ -181,8 +192,11 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <script src="js/firebase-config.js"></script>
 
+  <!-- Main Scripts -->
   <script src="js/config.js"></script>
   <script src="js/busqueda.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
   <script>
     /* ─── Inicialización de productos.html ─────────────────────────────── */
     function initPage() {
@@ -222,13 +236,11 @@
         window.menuBound = true;
       }
 
-      // CTA WhatsApp
+      // WhatsApp
       const waNumber = cfg.whatsappNumber;
       if (waNumber) {
-        ['nav-cta','nav-cta-mobile'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.href = `https://wa.me/${waNumber}`;
-        });
+        const waFloat = document.getElementById('whatsapp-float');
+        if (waFloat) waFloat.href = `https://wa.me/${waNumber}`;
       }
 
       // Footer
@@ -342,7 +354,7 @@
            </div>`;
 
       return `
-        <div class="product-card reveal" role="listitem">
+        <div class="product-card reveal" onclick="window.openProductModal('${product.id}')" role="listitem">
           <div class="product-card__img">
             ${imgHTML}
             ${product.featured ? '<span class="product-card__badge">Destacado</span>' : ''}
@@ -353,9 +365,54 @@
             ${product.description ? `<p class="product-card__desc">${escH(product.description)}</p>` : ''}
             <div class="product-card__footer">
               <span class="product-card__price">${priceStr}</span>
+              <button class="btn-add-cart" onclick="event.stopPropagation(); window.quickAdd('${product.id}', event)" title="Añadir al carrito">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                </svg>
+              </button>
             </div>
           </div>
         </div>`;
+    }
+
+    // Modal Helpers (Misma lógica que main.js)
+    window.openProductModal = function(productId) {
+      const product = window.App.getProductById(productId);
+      if (!product) return;
+
+      document.getElementById('modal-product-img').src = product.image || 'img/logo.png';
+      document.getElementById('modal-product-name').textContent = product.name;
+      document.getElementById('modal-product-category').textContent = window.App.getCategoryName(product.category);
+      document.getElementById('modal-product-desc').textContent = product.description || 'Sin descripción disponible.';
+      document.getElementById('modal-product-price').textContent = window.App.formatPrice(product.price);
+      document.getElementById('modal-product-qty').value = 1;
+
+      const addBtn = document.getElementById('modal-add-btn');
+      addBtn.onclick = (e) => window.Cart.add(product, parseInt(document.getElementById('modal-product-qty').value), e);
+
+      document.getElementById('product-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    window.closeProductModal = function() {
+      document.getElementById('product-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    window.changeQty = function(delta) {
+      const input = document.getElementById('modal-product-qty');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      input.value = val;
+    }
+
+    window.quickAdd = function(productId, e) {
+      const product = window.App.getProductById(productId);
+      if (product) window.Cart.add(product, 1, e);
+    }
+
+    window.addToCart = function(product, qty, e) {
+      window.Cart.add(product, qty, e);
     }
 
     function initReveal() {
@@ -389,5 +446,44 @@
     }
   </script>
 
+  <!-- MODAL DE DETALLES DE PRODUCTO -->
+  <div id="product-modal" class="modal">
+    <div class="modal-overlay" onclick="closeProductModal()"></div>
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeProductModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-content">
+        <div class="modal-grid">
+          <div class="modal-image">
+            <img id="modal-product-img" src="" alt="Producto">
+          </div>
+          <div class="modal-info">
+            <span id="modal-product-category" class="product-card__category">Categoría</span>
+            <h2 id="modal-product-name">Nombre del Producto</h2>
+            <p id="modal-product-desc">Descripción detallada del producto...</p>
+            <div class="modal-price-row">
+              <span id="modal-product-price" class="product-card__price">$0.00</span>
+              <div class="quantity-selector">
+                <button onclick="changeQty(-1)">-</button>
+                <input type="number" id="modal-product-qty" value="1" min="1">
+                <button onclick="changeQty(1)">+</button>
+              </div>
+            </div>
+            <button id="modal-add-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              Añadir al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Flotante WhatsApp -->
+  <a href="#" id="whatsapp-float" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
 </body>
 </html>

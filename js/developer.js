@@ -676,6 +676,7 @@ function openBranchModal(branch) {
   document.getElementById('branch-address').value = branch ? (branch.address || '') : '';
   document.getElementById('branch-phone').value = branch ? (branch.phone || '') : '';
   document.getElementById('branch-hours').value = branch ? (branch.hours || '') : '';
+  document.getElementById('branch-mapsUrl').value = branch ? (branch.mapsUrl || '') : '';
   document.getElementById('branch-image').value = branch ? (branch.image || '') : '';
   updateImgPreview('branch-image', branch ? branch.image : '');
   openModal('modal-branch');
@@ -690,6 +691,7 @@ function saveBranch() {
     address: document.getElementById('branch-address').value.trim(),
     phone: document.getElementById('branch-phone').value.trim(),
     hours: document.getElementById('branch-hours').value.trim(),
+    mapsUrl: document.getElementById('branch-mapsUrl').value.trim(),
     image: document.getElementById('branch-image').value,
     active: true,
   };
