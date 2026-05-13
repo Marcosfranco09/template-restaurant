@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Productos — Mi Restaurante</title>
+  <meta name="description" content="Explorá nuestra carta completa. Platos principales, entradas, postres y bebidas.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- SITE PRELOADER -->
+  <div id="site-preloader" class="site-preloader">
+    <div class="preloader-content">
+      <img src="images/logo.png" alt="Logo" class="preloader-logo">
+      <div class="preloader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- NAVBAR CON BÚSQUEDA -->
+  <header class="navbar navbar--search" id="navbar" role="banner">
+    <a href="index.html" class="navbar__logo" aria-label="Volver al inicio">
+      <img id="nav-logo-img" src="" alt="Logo" style="display:none">
+      <span id="nav-logo-text" class="navbar__logo-text">Mi Restaurante</span>
+    </a>
+
+    <div class="navbar__search-wrap">
+      <svg class="navbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="search" id="search-input" class="navbar__search-input" placeholder="Buscar productos..." autocomplete="off" aria-label="Buscar productos">
+    </div>
+
+    <!-- CTA Desktop -->
+    <div class="navbar__cta">
+      <a id="search-whatsapp-btn" href="#" target="_blank" class="btn btn-whatsapp" aria-label="Hacer pedido">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Hacé tu pedido
+      </a>
+    </div>
+
+    <!-- Hamburger mobile -->
+    <button class="navbar__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Menú móvil simplificado para productos -->
+    <nav class="navbar__mobile" id="mobile-menu" aria-label="Menú móvil">
+      <div style="padding: 0.5rem 0; color: var(--site-text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
+        Buscar en la Carta
+      </div>
+      
+      <!-- Buscador integrado en el menú (Mobile) -->
+      <div class="navbar__search-wrap navbar__search-wrap--mobile" style="display: flex; margin-bottom: 1.5rem;">
+        <svg class="navbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="left: 0.85rem; color: rgba(255,255,255,0.4);">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="search" id="search-input-mobile" class="navbar__search-input" placeholder="¿Qué estás buscando?" autocomplete="off" style="padding-left: 2.5rem; width: 100%;">
+      </div>
+
+      <a href="#" id="nav-cta-mobile" class="btn btn-whatsapp" style="justify-content: center;">
+        Hacé tu pedido
+      </a>
+    </nav>
+  </header>
+
+
+
+  <!-- ═══════════════════════════════════════════════════
+       HEADER DE PÁGINA
+  ════════════════════════════════════════════════════ -->
+  <div class="products-page">
+    <div class="products-page__header">
+      <h1 id="products-page-title">Nuestra Carta</h1>
+      <p id="products-page-subtitle">Explorá todos nuestros productos</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         FILTRO POR CATEGORÍAS
+    ════════════════════════════════════════════════════ -->
+    <div class="products-page__content">
+      <div class="container">
+
+
+        <div class="categories-filter" id="categories-filter" role="group" aria-label="Filtrar por categoría">
+          <!-- Generado dinámicamente -->
+        </div>
+
+        <!-- Grid de todos los productos -->
+        <div class="products-full-grid" id="products-full-grid" role="list" aria-label="Todos los productos">
+          <!-- Generado dinámicamente -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__columns">
+        <!-- Marca -->
+        <div class="footer__col footer__col--brand">
+          <img id="footer-logo-img-new" src="" alt="Logo" class="footer__logo-main" style="display:none">
+        </div>
+
+        <!-- Atención -->
+        <div class="footer__col">
+          <h4>ATENCIÓN AL CLIENTE</h4>
+          <ul class="footer__contact-info">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.62 19.79 19.79 0 01.22 1 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.56-1.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <span id="footer-phone">(0982) 300307</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span id="footer-whatsapp-text">(0982) 300307</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span id="footer-email-text">contacto@restaurante.com</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Horarios -->
+        <div class="footer__col">
+          <h4>HORARIOS</h4>
+          <div class="footer__schedule">
+            <p><strong>Del Local</strong></p>
+            <p>Lunes a Sábados: 05:00hs a 21:00hs</p>
+            <p>Domingo: 05:00hs a 14:00hs</p>
+            <div style="margin-top:1rem"></div>
+            <p><strong>De Entrega</strong></p>
+            <p>07:00hs a 18:00hs</p>
+          </div>
+        </div>
+
+        <!-- La Empresa -->
+        <div class="footer__col">
+          <h4>LA EMPRESA</h4>
+          <nav class="footer__nav">
+            <a href="index.html#inicio">Acerca de nosotros</a>
+            <a href="index.html#contacto">Contacto</a>
+            <a href="index.html#locales">Zona de Cobertura</a>
+          </nav>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer__col">
+          <h4>LEGAL</h4>
+          <nav class="footer__nav">
+            <a href="#">Términos y Condiciones E-Commerce</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright" id="footer-copyright">
+          Copyright © 2022 San Cayetano. Todos los derechos reservados.
+        </p>
+        <div class="footer__made-by">
+          <span>Hecho por</span>
+          <img src="img/romatech_logo.png" alt="RomaTech" class="footer__dev-logo">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDK (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/busqueda.js"></script>
+  <script>
+    /* ─── Inicialización de productos.html ─────────────────────────────── */
+    function initPage() {
+      const cfg = window.App.config;
+
+      // Navbar
+      const logoImg  = document.getElementById('nav-logo-img');
+      const logoText = document.getElementById('nav-logo-text');
+      if (cfg.logoImage && logoImg) {
+        logoImg.src = cfg.logoImage;
+        logoImg.style.display = 'block';
+      }
+
+      if (logoText) {
+        logoText.textContent = cfg.restaurantName;
+        logoText.style.display = cfg.showLogoText ? 'block' : 'none';
+        logoText.style.fontFamily = cfg.logoFontFamily;
+      }
+      const pageTitle = document.getElementById('page-title');
+      if (pageTitle) pageTitle.textContent = `Carta — ${cfg.restaurantName}`;
+
+      // Scroll effect (solo una vez)
+      if (!window.scrollBound) {
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+        window.scrollBound = true;
+      }
+
+      // Hamburger
+      const hamburger  = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (!window.menuBound && hamburger) {
+        hamburger.addEventListener('click', () => {
+          hamburger.classList.toggle('active');
+          mobileMenu.classList.toggle('open');
+        });
+        window.menuBound = true;
+      }
+
+      // CTA WhatsApp
+      const waNumber = cfg.whatsappNumber;
+      if (waNumber) {
+        ['nav-cta','nav-cta-mobile'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.href = `https://wa.me/${waNumber}`;
+        });
+      }
+
+      // Footer
+      const footerLogoImg = document.getElementById('footer-logo-img-new');
+      if (footerLogoImg) {
+        footerLogoImg.src = cfg.logoImage || '';
+        footerLogoImg.style.display = cfg.logoImage ? 'block' : 'none';
+      }
+
+      setTextContent('footer-phone', cfg.contactPhone);
+      setTextContent('footer-whatsapp-text', cfg.whatsappNumber);
+      setTextContent('footer-email-text', cfg.contactEmail);
+
+      const fcopy = document.getElementById('footer-copyright');
+      if (fcopy) {
+        fcopy.textContent = `Copyright © ${new Date().getFullYear()} ${cfg.restaurantName}. ${cfg.footerCopyright || 'Todos los derechos reservados.'}`;
+      }
+
+      // Header de página
+      const pageHeaderTitle = document.getElementById('products-page-title');
+      if (pageHeaderTitle) pageHeaderTitle.textContent = cfg.productsTitle || 'Nuestra Carta';
+
+      // Filtros de categoría
+      renderCategories();
+      renderProducts(activeCategory || 'all');
+
+      // Animaciones
+      if (typeof initReveal === 'function') initReveal();
+    }
+
+    document.addEventListener('DOMContentLoaded', initPage);
+    window.addEventListener('app-config-updated', initPage);
+
+    // Estado del filtro activo
+    let activeCategory = 'all';
+
+    function renderCategories() {
+      const cats   = window.App.getCategories(true);
+      const filter = document.getElementById('categories-filter');
+      if (!filter) return;
+
+      let html = `<button class="category-btn active" data-cat="all" onclick="filterBy('all', this)">Todos</button>`;
+      cats.forEach(cat => {
+        html += `<button class="category-btn" data-cat="${cat.id}" onclick="filterBy('${cat.id}', this)">${escH(cat.name)}</button>`;
+      });
+      filter.innerHTML = html;
+    }
+
+    function filterBy(catId, btn) {
+      activeCategory = catId;
+      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(catId);
+    }
+
+    function renderProducts(catId) {
+      const grid = document.getElementById('products-full-grid');
+      if (!grid) return;
+
+      const query = (typeof window.getSearchQuery === 'function') ? window.getSearchQuery() : '';
+
+      let products = window.App.getProducts(true); // solo disponibles
+      if (catId !== 'all') products = products.filter(p => p.category === catId);
+      if (query) {
+        const normalize = (str) => {
+          if (!str) return '';
+          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        };
+
+        const queryTokens = normalize(query).split(/\s+/).filter(t => t.length > 0);
+        
+        products = products.filter(p => {
+          const combinedText = normalize(`${p.name} ${p.description} ${window.App.getCategoryName(p.category)}`);
+          // Debe contener TODAS las palabras de la búsqueda (sin importar el orden)
+          return queryTokens.every(token => combinedText.includes(token));
+        });
+      }
+
+      if (products.length === 0) {
+        const msg = query
+          ? `No se encontraron productos para "<strong>${escH(query)}</strong>".`
+          : 'No hay productos en esta categoría aún.';
+        grid.innerHTML = `
+          <div class="products-empty" style="grid-column:1/-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 7H3a2 2 0 00-2 2v10a2 2 0 002 2h18a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/>
+            </svg>
+            <p>${msg}</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => buildCard(p)).join('');
+      initReveal();
+    }
+
+    // Exponer para busqueda.js: re-render cuando el usuario escribe
+    window.renderProductsWithSearch = function (query) {
+      renderProducts(activeCategory);
+    };
+
+    function buildCard(product) {
+      const catName  = window.App.getCategoryName(product.category);
+      const priceStr = window.App.formatPrice(product.price);
+      const imgHTML  = product.image
+        ? `<img src="${product.image}" alt="${escH(product.name)}" loading="lazy">`
+        : `<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-primary),var(--color-primary-dark));display:flex;align-items:center;justify-content:center">
+             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5">
+               <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+             </svg>
+           </div>`;
+
+      return `
+        <div class="product-card reveal" role="listitem">
+          <div class="product-card__img">
+            ${imgHTML}
+            ${product.featured ? '<span class="product-card__badge">Destacado</span>' : ''}
+          </div>
+          <div class="product-card__body">
+            ${catName ? `<p class="product-card__category">${escH(catName)}</p>` : ''}
+            <h3 class="product-card__name">${escH(product.name)}</h3>
+            ${product.description ? `<p class="product-card__desc">${escH(product.description)}</p>` : ''}
+            <div class="product-card__footer">
+              <span class="product-card__price">${priceStr}</span>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function initReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+    }
+
+    function setFooterHref(id, href) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (href) el.href = href; else el.style.display = 'none';
+    }
+
+    function escH(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function setTextContent(id, value) {
+      const el = document.getElementById(id);
+      if (el && value !== undefined && value !== null) el.textContent = value;
+    }
+
+    function setHref(id, href) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (href) { el.href = href; el.style.display = ''; }
+      else { el.style.display = 'none'; }
+    }
+  </script>
+
+</body>
+</html>
