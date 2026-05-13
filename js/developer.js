@@ -28,9 +28,22 @@ function initAuth() {
 
   // Verificar sesión con Firebase
   if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) showAdmin();
-      else showLogin();
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        // Verificar si es administrador
+        const isAdmin = await window.App.checkIsAdmin(user.uid);
+        if (isAdmin) {
+          showAdmin();
+        } else {
+          // No es admin: Cerrar sesión y avisar
+          alert("Acceso Restringido: Tu cuenta no tiene permisos de administrador.");
+          firebase.auth().signOut().then(() => {
+            window.location.href = 'index.html';
+          });
+        }
+      } else {
+        showLogin();
+      }
     });
   } else {
     // Fallback local legacy
@@ -51,14 +64,21 @@ function handleLogin(e) {
   if (typeof firebase !== 'undefined' && firebase.apps.length > 0 && window.firebaseConfig.apiKey !== 'TU_API_KEY') {
     btn.classList.add('btn-loading');
     firebase.auth().signInWithEmailAndPassword(u, p)
-      .then(() => {
-        console.log('Login exitoso con Firebase');
-        // No quitamos el loading porque se va a recargar o cambiar de vista
+      .then(async (result) => {
+        const isAdmin = await window.App.checkIsAdmin(result.user.uid);
+        if (isAdmin) {
+          console.log('Login exitoso: Admin detectado');
+          // onAuthStateChanged se encargará de mostrar el panel
+        } else {
+          btn.classList.remove('btn-loading');
+          err.textContent = 'Acceso denegado: No eres administrador.';
+          firebase.auth().signOut();
+        }
       })
       .catch(error => {
         btn.classList.remove('btn-loading');
         console.error('Error Firebase Auth:', error);
-        err.textContent = 'Correo o contraseña incorrectos. Intente de nuevo.';
+        err.textContent = 'Correo o contraseña incorrectos.';
         setTimeout(() => err.textContent = '', 4000);
       });
   } else {

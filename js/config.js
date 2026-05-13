@@ -341,10 +341,13 @@ class AppConfig {
           firebase.auth().onAuthStateChanged(user => {
             if (user) {
               console.log(`[AppConfig] Admin detectado. Subiendo datos locales a Firebase para ${key}...`);
-              const localData = (key === KEYS.CONFIG) ? this.config : 
-                               (key === KEYS.PRODUCTS) ? this.products :
-                               (key === KEYS.CATEGORIES) ? this.categories : this.branches;
-              this._save(key, localData);
+              const localData = 
+                (key === KEYS.CONFIG)     ? this.config : 
+                (key === KEYS.PRODUCTS)   ? this.products :
+                (key === KEYS.CATEGORIES) ? this.categories : 
+                (key === KEYS.BRANCHES)   ? this.branches : null;
+              
+              if (localData) this._save(key, localData);
             }
           });
         }
@@ -562,6 +565,18 @@ class AppConfig {
   getCategoryName(categoryId) {
     const cat = this.categories.find(c => c.id === categoryId);
     return cat ? cat.name : '';
+  }
+
+  // ─── Verificación de Admin ────────────────────────────────────────────────
+  async checkIsAdmin(userId) {
+    if (!db) return false;
+    try {
+      const snapshot = await db.ref(`${KEYS.USERS}/${userId}/role`).once('value');
+      return snapshot.val() === 'admin';
+    } catch (e) {
+      console.error("[AppConfig] Error al verificar rol de admin:", e);
+      return false;
+    }
   }
 }
 
