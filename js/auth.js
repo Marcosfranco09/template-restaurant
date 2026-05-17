@@ -6,6 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuth();
 });
 
+function setButtonLoading(btn, isLoading, originalText = null) {
+  if (!btn) return;
+  if (isLoading) {
+    if (!btn.dataset.originalText) {
+      btn.dataset.originalText = btn.innerHTML;
+    }
+    btn.disabled = true;
+    btn.style.width = btn.offsetWidth + 'px'; // Mantiene el ancho exacto
+    btn.innerHTML = `<span class="btn-spinner"></span>`;
+  } else {
+    btn.disabled = false;
+    btn.style.width = '';
+    if (originalText) {
+      btn.innerHTML = originalText;
+      btn.dataset.originalText = originalText;
+    } else {
+      btn.innerHTML = btn.dataset.originalText;
+    }
+  }
+}
+
 function initAuth() {
   if (typeof firebase === 'undefined') return;
 
@@ -36,7 +57,9 @@ function initAuth() {
   // ─── Login con Google ──────────────────────────────────────────────────────
   const btnGoogle = document.getElementById('btn-google-login');
   if (btnGoogle) {
-    btnGoogle.addEventListener('click', () => {
+    btnGoogle.addEventListener('click', (e) => {
+      e.preventDefault();
+      setButtonLoading(btnGoogle, true);
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider)
         .then(result => {
@@ -52,6 +75,7 @@ function initAuth() {
           window.location.href = 'index.html';
         })
         .catch(error => {
+          setButtonLoading(btnGoogle, false);
           console.error("Error Google Login:", error);
           showAuthError('login-error', "Error al conectar con Google.");
         });
@@ -63,11 +87,16 @@ function initAuth() {
   if (formLogin) {
     formLogin.addEventListener('submit', (e) => {
       e.preventDefault();
+      const btn = formLogin.querySelector('button[type="submit"]');
+      setButtonLoading(btn, true);
       const email = document.getElementById('login-email').value;
       const pass = document.getElementById('login-password').value;
       firebase.auth().signInWithEmailAndPassword(email, pass)
         .then(() => window.location.href = 'index.html')
-        .catch(error => showAuthError('login-error', "Credenciales incorrectas."));
+        .catch(error => {
+          setButtonLoading(btn, false);
+          showAuthError('login-error', "Credenciales incorrectas.");
+        });
     });
   }
 
@@ -76,6 +105,8 @@ function initAuth() {
   if (formRegister) {
     formRegister.addEventListener('submit', (e) => {
       e.preventDefault();
+      const btn = formRegister.querySelector('button[type="submit"]');
+      setButtonLoading(btn, true);
       const name = document.getElementById('reg-name').value;
       const email = document.getElementById('reg-email').value;
       const pass = document.getElementById('reg-password').value;
@@ -89,7 +120,10 @@ function initAuth() {
           });
           window.location.href = 'index.html';
         })
-        .catch(error => showAuthError('reg-error', "Error al crear la cuenta."));
+        .catch(error => {
+          setButtonLoading(btn, false);
+          showAuthError('reg-error', "Error al crear la cuenta.");
+        });
     });
   }
 
@@ -109,8 +143,7 @@ function initAuth() {
       };
 
       const btn = document.getElementById('btn-save-profile');
-      btn.disabled = true;
-      btn.textContent = 'Guardando...';
+      setButtonLoading(btn, true);
 
       window.App.saveUserProfile(user.uid, profileData)
         .then(() => {
@@ -119,12 +152,10 @@ function initAuth() {
             successEl.classList.add('show');
             setTimeout(() => successEl.classList.remove('show'), 3000);
           }
-          btn.disabled = false;
-          btn.textContent = 'Guardar Cambios';
+          setButtonLoading(btn, false, 'Guardar Cambios');
           updateNavbarText(profileData.name.split(' ')[0]);
         })
         .catch(() => {
-          btn.disabled = false;
           btn.textContent = 'Guardar Cambios';
         });
     });

@@ -264,6 +264,17 @@ h4 {
   backdrop-filter: blur(4px);
 }
 
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: preloader-spin 0.8s linear infinite;
+  margin: 0 auto;
+  display: inline-block;
+}
+
 .btn-outline:hover {
   background: var(--color-accent);
   border-color: var(--color-accent);
