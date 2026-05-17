@@ -2896,6 +2896,48 @@ h4 {
   color: var(--color-accent-dark, #b58900);
 }
 
+.demo-warning-banner {
+  position: absolute;
+  top: 25px; /* Cuelga al tope de la pantalla */
+  left: 50%;
+  transform: translate(-50%, -20px);
+  background: rgba(255, 171, 0, 0.95);
+  border: 1px solid #ffab00;
+  color: #000;
+  border-radius: 30px;
+  padding: 0.5rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 5005; /* Más alto que el modal container (5001) */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 171, 0, 0.2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.demo-warning-banner.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.demo-warning-banner svg {
+  flex-shrink: 0;
+  color: #000;
+}
+.light .demo-warning-banner {
+  background: #ffaa00;
+  border-color: #e69900;
+  color: #000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px rgba(255, 170, 0, 0.2);
+}
+.light .demo-warning-banner svg {
+  color: #000;
+}
+
 /* Card Wrapper with 3D effects */
 .payment-card-container {
   display: flex;
@@ -3427,6 +3469,24 @@ h4 {
 }
 .light .gps-maps-btn:hover {
   background: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsividad para móviles del Modal de Pago */
+@media (max-width: 480px) {
+  .payment-footer-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important;
+  }
+  .payment-btn-submit {
+    order: 1 !important;
+    font-size: 0.85rem !important;
+    padding: 0 0.5rem !important;
+    width: 100% !important;
+  }
+  .payment-btn-back {
+    order: 2 !important;
+    width: 100% !important;
+  }
 }
 
 

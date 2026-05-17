@@ -58,7 +58,7 @@ function handleLogin(e) {
   const u = document.getElementById('login-user').value;
   const p = document.getElementById('login-pass').value;
   const err = document.getElementById('login-error');
-  const btn = e.target.querySelector('button');
+  const btn = e.target.querySelector('.login-btn');
 
   // Si Firebase está configurado y no es el placeholder
   if (typeof firebase !== 'undefined' && firebase.apps.length > 0 && window.firebaseConfig.apiKey !== 'TU_API_KEY') {
