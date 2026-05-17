@@ -36,7 +36,7 @@ function initAuth() {
           showAdmin();
         } else {
           // No es admin: Cerrar sesión y avisar
-          alert("Acceso Restringido: Tu cuenta no tiene permisos de administrador.");
+          window.showToast('Acceso Restringido: Tu cuenta no tiene permisos de administrador.', 'error', 5000);
           firebase.auth().signOut().then(() => {
             window.location.href = 'index.html';
           });

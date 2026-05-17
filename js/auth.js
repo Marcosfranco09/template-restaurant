@@ -9,6 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function initAuth() {
   if (typeof firebase === 'undefined') return;
 
+  // Advertencia de protocolo local file:// (impide persistencia de sesión en Firebase)
+  if (window.location.protocol === 'file:') {
+    console.warn(
+      '⚠️ [Firebase Auth] Estás ejecutando el sitio usando el protocolo local "file://".\n' +
+      'Los navegadores modernos bloquean y aíslan LocalStorage/IndexedDB en páginas locales por seguridad.\n' +
+      'Para que la sesión de Firebase persista entre páginas (index, perfil, productos), DEBES ejecutar el proyecto bajo un servidor local.\n' +
+      '👉 Recomendación: Usa la extensión "Live Server" de VS Code (Clic derecho en index.html -> Open with Live Server) o ejecuta "npx http-server" en la terminal.'
+    );
+  }
+
   // ─── Observador del estado de autenticación ───────────────────────────────
   firebase.auth().onAuthStateChanged(user => {
     updateAuthUI(user);
@@ -104,11 +114,14 @@ function initAuth() {
 
       window.App.saveUserProfile(user.uid, profileData)
         .then(() => {
-          document.getElementById('save-success').style.display = 'block';
+          const successEl = document.getElementById('save-success');
+          if (successEl) {
+            successEl.classList.add('show');
+            setTimeout(() => successEl.classList.remove('show'), 3000);
+          }
           btn.disabled = false;
           btn.textContent = 'Guardar Cambios';
           updateNavbarText(profileData.name.split(' ')[0]);
-          setTimeout(() => document.getElementById('save-success').style.display = 'none', 3000);
         })
         .catch(() => {
           btn.disabled = false;
@@ -142,6 +155,11 @@ function updateAuthUI(user) {
   if (user) {
     const nameToShow = user.displayName ? user.displayName.split(' ')[0] : 'Cuenta';
     updateNavbarText(capitalize(nameToShow));
+
+    const navAuthLink = document.getElementById('nav-auth');
+    const navAuthLinkMobile = document.getElementById('nav-auth-mobile');
+    if (navAuthLink) navAuthLink.href = 'perfil.html';
+    if (navAuthLinkMobile) navAuthLinkMobile.href = 'perfil.html';
     
     // Poblar dropdowns
     const dropdownHTML = `
