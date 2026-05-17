@@ -122,9 +122,12 @@ function initNavbar() {
       hamburger.classList.toggle('active');
       mobileMenu.classList.toggle('open');
     });
-    // Cerrar al hacer click en un link
+    // Cerrar al hacer click en un link (excepto el de perfil/auth)
     mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        if (link.id === 'nav-auth-mobile' || link.closest('#nav-auth-dropdown-mobile')) {
+          return; // No cerrar el menú principal si se hace clic en el perfil o su dropdown
+        }
         hamburger.classList.remove('active');
         mobileMenu.classList.remove('open');
       });

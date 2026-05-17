@@ -28,7 +28,7 @@
 
     @media (max-width: 991px) {
       .profile-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
@@ -38,6 +38,10 @@
       border-radius: 24px;
       padding: 30px;
       text-align: center;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .profile-avatar {
@@ -65,6 +69,7 @@
       color: var(--site-text-muted);
       font-size: 0.9rem;
       margin-bottom: 24px;
+      word-break: break-all;
     }
 
     .profile-menu {
@@ -101,7 +106,10 @@
       padding: 40px;
       display: flex;
       flex-direction: column;
-      min-height: 500px; /* Evita que la tarjeta cambie de tamaño al cambiar pestañas */
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     .profile-section {
@@ -125,9 +133,20 @@
       gap: 20px;
     }
 
+    .form-field.full-width {
+      grid-column: 1 / -1;
+    }
+
     @media (max-width: 767px) {
       .profile-form .form-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .profile-actions {
+        justify-content: stretch !important;
+      }
+      .profile-actions button {
+        width: 100%;
       }
     }
 
@@ -161,6 +180,29 @@
       margin-top: 30px;
       display: flex;
       justify-content: flex-end;
+    }
+
+    #btn-save-profile {
+      background: var(--color-accent);
+      color: #1a1a1a;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #btn-save-profile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+      background: #e6c14d;
     }
 
     .success-msg {
@@ -202,6 +244,21 @@
       }
       .success-msg.show {
         transform: translateY(0);
+      }
+      .profile-main, .profile-sidebar {
+        padding: 20px;
+      }
+      .profile-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 15px; /* Leave space for scrollbar if any */
+      }
+      .profile-tabs::-webkit-scrollbar {
+        height: 4px;
+      }
+      .profile-tabs::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
       }
     }
 
@@ -318,43 +375,49 @@
       <!-- Main Content -->
       <main class="profile-main">
         <div class="profile-tabs">
-          <button class="profile-tab-btn active" onclick="showSection('datos')">Mis Datos</button>
-          <button class="profile-tab-btn" onclick="showSection('pedidos')">Historial de Pedidos</button>
+          <button class="profile-tab-btn active" onclick="showSection('datos', this)">Mis Datos</button>
+          <button class="profile-tab-btn" onclick="showSection('pedidos', this)">Historial de Pedidos</button>
         </div>
 
-        <div id="section-datos" class="profile-section">
-          <h1 class="profile-section-title">Mis Datos</h1>
-          
-          <form class="profile-form" id="form-profile">
-            <div class="form-grid">
-              <div class="form-field">
-                <label>Nombre Completo</label>
-                <input type="text" id="prof-name" placeholder="Tu nombre">
-              </div>
-              <div class="form-field">
-                <label>Teléfono / WhatsApp</label>
-                <input type="text" id="prof-phone" placeholder="5959...">
-              </div>
-              <div class="form-field" style="grid-column: span 2;">
-                <label>Dirección de Entrega</label>
-                <input type="text" id="prof-address" placeholder="Calle, Ciudad, Referencias">
-              </div>
-            </div>
+        <div class="profile-viewport" style="width: 100%; overflow: hidden; position: relative; transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: height;">
+          <div class="profile-track" style="display: flex; width: 200%; align-items: flex-start; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform;">
             
-            <div class="profile-actions">
-              <button type="submit" class="btn btn-primary" id="btn-save-profile">Guardar Cambios</button>
+            <div id="section-datos" class="profile-section profile-slide" style="width: 50%; flex: 0 0 50%; transition: opacity 0.4s ease;">
+              <h1 class="profile-section-title">Mis Datos</h1>
+              
+              <form class="profile-form" id="form-profile">
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="prof-name" placeholder="Tu nombre">
+                  </div>
+                  <div class="form-field">
+                    <label>Teléfono / WhatsApp</label>
+                    <input type="text" id="prof-phone" placeholder="5959...">
+                  </div>
+                  <div class="form-field full-width">
+                    <label>Dirección de Entrega</label>
+                    <input type="text" id="prof-address" placeholder="Calle, Ciudad, Referencias">
+                  </div>
+                </div>
+                
+                <div class="profile-actions">
+                  <button type="submit" class="btn btn-primary" id="btn-save-profile">Guardar Cambios</button>
+                </div>
+                <div id="save-success" class="success-msg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #00ff88;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>¡Perfil actualizado correctamente!</span>
+                </div>
+              </form>
             </div>
-            <div id="save-success" class="success-msg">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #00ff88;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>¡Perfil actualizado correctamente!</span>
-            </div>
-          </form>
-        </div>
 
-        <div id="section-pedidos" class="profile-section" style="display: none;">
-          <h1 class="profile-section-title">Mis Pedidos</h1>
-          <div id="orders-list" class="orders-list">
-            <div class="loading-orders">Cargando pedidos...</div>
+            <div id="section-pedidos" class="profile-section profile-slide" style="width: 50%; flex: 0 0 50%; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;">
+              <h1 class="profile-section-title">Mis Pedidos</h1>
+              <div id="orders-list" class="orders-list">
+                <div class="loading-orders">Cargando pedidos...</div>
+              </div>
+            </div>
+          
           </div>
         </div>
       </main>
@@ -371,13 +434,102 @@
   <script src="js/auth.js"></script>
   
   <script>
-    function showSection(section) {
-      document.querySelectorAll('.profile-section').forEach(s => s.style.display = 'none');
+    let _viewportTimer;
+    function showSection(section, btnEvent) {
+      const activeBtn = btnEvent || document.querySelector('.profile-tab-btn[onclick*="' + section + '"]');
+      if (activeBtn && activeBtn.classList.contains('active')) return;
+
       document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const sDatos = document.getElementById('section-datos');
+      const sPedidos = document.getElementById('section-pedidos');
+      const track = document.querySelector('.profile-track');
+      const viewport = document.querySelector('.profile-viewport');
+
+      if (!track || !viewport || !sDatos || !sPedidos) return;
+
+      // Restaurar alturas para poder medir correctamente
+      sDatos.style.height = 'auto';
+      sPedidos.style.height = 'auto';
+
+      // Determinar si es desktop
+      const isDesktop = window.innerWidth > 991;
+      const baseHeight = sDatos.offsetHeight; // Usamos Mis Datos como ancla en desktop
+
+      // Fijar la altura actual del viewport antes de cambiar para animar desde ahí
+      viewport.style.height = viewport.offsetHeight + 'px';
       
-      document.getElementById('section-' + section).style.display = 'flex';
-      event.currentTarget.classList.add('active');
+      // Forzar reflow
+      void viewport.offsetWidth;
+
+      if (section === 'datos') {
+        track.style.transform = 'translateX(0)';
+        
+        sDatos.style.opacity = '1';
+        sDatos.style.pointerEvents = 'auto';
+        sPedidos.style.opacity = '0';
+        sPedidos.style.pointerEvents = 'none';
+
+        // Animar altura
+        viewport.style.height = isDesktop ? baseHeight + 'px' : sDatos.offsetHeight + 'px';
+      } else {
+        track.style.transform = 'translateX(-50%)';
+        
+        sPedidos.style.opacity = '1';
+        sPedidos.style.pointerEvents = 'auto';
+        sDatos.style.opacity = '0';
+        sDatos.style.pointerEvents = 'none';
+
+        // Animar altura
+        viewport.style.height = isDesktop ? baseHeight + 'px' : sPedidos.offsetHeight + 'px';
+      }
+
+      // Restablecer altura auto y colapsar la sección inactiva después de la transición
+      clearTimeout(_viewportTimer);
+      _viewportTimer = setTimeout(() => {
+        if (section === 'datos') {
+          sPedidos.style.height = '0px';
+          sPedidos.style.overflow = 'hidden';
+        } else {
+          sDatos.style.height = '0px';
+          sDatos.style.overflow = 'hidden';
+        }
+        
+        if (isDesktop) {
+          viewport.style.height = baseHeight + 'px'; // Mantener altura fija en desktop
+        } else {
+          viewport.style.height = 'auto'; // Altura dinámica en móvil
+        }
+      }, 500);
     }
+
+    // Inicializar altura del viewport
+    document.addEventListener('DOMContentLoaded', () => {
+      const viewport = document.querySelector('.profile-viewport');
+      const sDatos = document.getElementById('section-datos');
+      const sPedidos = document.getElementById('section-pedidos');
+      if (viewport && sDatos && sPedidos) {
+        setTimeout(() => {
+          sPedidos.style.height = '0px';
+          sPedidos.style.overflow = 'hidden';
+          const isDesktop = window.innerWidth > 991;
+          viewport.style.height = sDatos.offsetHeight + 'px';
+          if (!isDesktop) {
+            setTimeout(() => viewport.style.height = 'auto', 500);
+          }
+        }, 100);
+      }
+      
+      // Ajustar si se cambia el tamaño de la ventana
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 991 && viewport && sDatos) {
+           viewport.style.height = sDatos.offsetHeight + 'px';
+        } else if (viewport) {
+           viewport.style.height = 'auto';
+        }
+      });
+    });
 
     // Fallback Preloader
     setTimeout(() => {

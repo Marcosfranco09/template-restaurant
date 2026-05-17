@@ -158,8 +158,11 @@ function updateAuthUI(user) {
 
     const navAuthLink = document.getElementById('nav-auth');
     const navAuthLinkMobile = document.getElementById('nav-auth-mobile');
+    const arrowMobile = document.getElementById('nav-auth-arrow-mobile');
+    
     if (navAuthLink) navAuthLink.href = 'perfil.html';
     if (navAuthLinkMobile) navAuthLinkMobile.href = 'perfil.html';
+    if (arrowMobile) arrowMobile.style.display = 'block';
     
     // Poblar dropdowns
     const dropdownHTML = `
@@ -182,10 +185,22 @@ function updateAuthUI(user) {
       
       const link = c.querySelector('a');
       if(link) {
-        link.addEventListener('click', (e) => {
+        // Remover listener anterior para evitar duplicados si se llama varias veces
+        const newLink = link.cloneNode(true);
+        link.parentNode.replaceChild(newLink, link);
+        
+        newLink.addEventListener('click', (e) => {
           if (window.innerWidth <= 768 || c.id.includes('mobile')) {
             e.preventDefault();
             c.classList.toggle('active');
+            
+            // Rotar flecha si es mobile
+            if (c.id.includes('mobile')) {
+              const arrow = c.querySelector('#nav-auth-arrow-mobile');
+              if (arrow) {
+                arrow.style.transform = c.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+              }
+            }
           }
         });
       }
@@ -211,8 +226,14 @@ function updateAuthUI(user) {
     
     const navAuthLink = document.getElementById('nav-auth');
     const navAuthLinkMobile = document.getElementById('nav-auth-mobile');
+    const arrowMobile = document.getElementById('nav-auth-arrow-mobile');
+    
     if (navAuthLink) navAuthLink.href = 'login.html';
     if (navAuthLinkMobile) navAuthLinkMobile.href = 'login.html';
+    if (arrowMobile) {
+      arrowMobile.style.display = 'none';
+      arrowMobile.style.transform = 'rotate(0deg)';
+    }
   }
 }
 
