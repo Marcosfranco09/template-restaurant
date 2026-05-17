@@ -74,17 +74,17 @@
           <p>Tu carrito está vacío.<br>¡Agregá algo rico!</p>
         </div>
       `;
-      footer.style.display = 'none';
+      footer.classList.add('collapsed');
       if (handle) handle.classList.remove('visible');
     } else {
-      footer.style.display = 'block';
+      footer.classList.remove('collapsed');
       if (handle) handle.classList.add('visible');
 
       let total = 0;
       container.innerHTML = cart.map(item => {
         total += item.price * item.qty;
         return `
-          <div class="cart-item">
+          <div class="cart-item" data-id="${item.id}">
             <img src="${item.image || 'img/logo.png'}" alt="${item.name}" class="cart-item-img">
             <div class="cart-item-info">
               <h4>${item.name}</h4>
@@ -179,8 +179,17 @@
     },
 
     remove: function(id) {
-      cart = cart.filter(item => item.id !== id);
-      save();
+      const itemEl = document.querySelector(`.cart-item[data-id="${id}"]`);
+      if (itemEl) {
+        itemEl.classList.add('removing');
+        setTimeout(() => {
+          cart = cart.filter(item => item.id !== id);
+          save();
+        }, 350); // Coincide con la duración de la transición CSS
+      } else {
+        cart = cart.filter(item => item.id !== id);
+        save();
+      }
     },
 
     updateQty: function(id, delta) {
